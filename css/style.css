@@ -1,0 +1,38 @@
+.popup {
+    position: fixed;
+    display: flex;
+    z-index: 999;
+    top:0; left: 0; right: 0; bottom: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.5);
+  
+    &.open {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+  
+  .popup-content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    margin: auto;
+    transition: scale 0.8s;
+    padding: 5px;
+    scale: 0;
+    
+    .popup.open & {
+      scale: 1;
+    }
+  
+    img {
+      display: block;
+      max-width: 80vw;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+  }

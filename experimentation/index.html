@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yANNIS</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header" id="header">
+            Welcome to my website.
+        </h1>
+        <div class="gallery" id="gallery">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 1">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 2">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 3">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 4">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 5">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 6">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 7">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 8">
+            <img src="https://leo-chabrier.streamlit.app/~/+/media/75cb66bd177dcad62f247ae09ba67972fe75ed3bd05894211d1284c3.jpg" alt="Image 9">
+            <!-- Ajoutez les liens des autres images ici -->
+        </div>
+                
+        <ul class="blocks">
+            <li class="block-1 block"></li>
+            <li class="block-2 block"></li>
+            <li class="block-3 block"></li>
+            <li class="block-4 block"></li>
+            <li class="block-5 block"></li>
+            <li class="block-6 block"></li>
+        </ul>
+    </div>
+    <!-- •Gestion du temps d'animation ici -->
+    <script>
+        TweenMax.staggerFrom(
+            "li",
+            3,
+            {
+                x: "-1600",
+                delay: 0.1,
+                ease: Expo.easeInOut,
+            },
+            0.16
+        );
+
+        TweenMax.staggerTo(
+            "li",
+            2.6,
+            {
+                x: "1600",
+                delay: 2,
+                ease: Expo.easeInOut,
+            },
+            0.2
+        );
+
+        var textWrapper = document.querySelector(".header");
+        textWrapper.innerHTML = textWrapper.textContent.replace(
+            /\S/g,
+            "<span class='letter'>$&</span>"
+        );
+
+        // Supprimez le code d'animation actuel pour le header et ajoutez ce qui suit après l'animation existante
+        anime.timeline().add({
+            targets: ".header .letter",
+            opacity: [0, 1],
+            translateY: [150, 0],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 100,
+            delay: (el, i) => 4000 + 40 * i,
+            complete: function() {
+                // Animation pour la disparition du texte
+                var header = document.getElementById("header");
+                header.classList.add("fade-out");
+
+                // Récupération de la durée totale de l'animation de disparition du texte
+                var animationDuration = parseFloat(getComputedStyle(header).animationDuration) * 1000; // En millisecondes
+
+                header.addEventListener("animationend", function() {
+                    header.style.display = "none";
+
+                    // Animation pour l'apparition de la galerie
+                    var gallery = document.getElementById("gallery");
+                    gallery.style.display = "grid"; // Affiche la galerie en tant que grille
+
+                    // Animation de la translation et de l'opacité de la galerie
+                    anime({
+                        targets: ".gallery",
+                        translateY: [-100, 0], // De haut en bas
+                        opacity: [0, 1],
+                        easing: "easeOutExpo",
+                        duration: animationDuration, // Utilisation de la même durée que l'animation de disparition du texte
+                        delay: -animationDuration // Décalage pour synchroniser avec la fin de l'animation de disparition du texte
+                    });
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
